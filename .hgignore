@@ -1,0 +1,6 @@
+syntax: glob
+Source/**/bin/**
+Source/**/obj/**
+**.suo
+**.user
+BuildOutput/**
