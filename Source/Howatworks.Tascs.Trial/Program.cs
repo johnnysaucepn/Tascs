@@ -17,7 +17,7 @@ namespace Howatworks.Tascs.Trial
             new Build.Build(new TascOptions
             {
                 {"Project", @"..\..\..\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj"},
-                {"Output", @"..\..\..\BuildOutput"}
+                {"Output", @"..\..\..\..\BuildOutput"}
             }).Run();
 
 
