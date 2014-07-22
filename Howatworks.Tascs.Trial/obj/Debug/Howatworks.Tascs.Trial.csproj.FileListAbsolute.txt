@@ -1,0 +1,10 @@
+c:\Projects\Tascs\Howatworks.Tascs.Trial\bin\Debug\Howatworks.Tascs.Trial.exe.config
+c:\Projects\Tascs\Howatworks.Tascs.Trial\bin\Debug\Howatworks.Tascs.Trial.exe
+c:\Projects\Tascs\Howatworks.Tascs.Trial\bin\Debug\Howatworks.Tascs.Trial.pdb
+c:\Projects\Tascs\Howatworks.Tascs.Trial\bin\Debug\Howatworks.Tascs.Build.dll
+c:\Projects\Tascs\Howatworks.Tascs.Trial\bin\Debug\Howatworks.Tascs.Core.dll
+c:\Projects\Tascs\Howatworks.Tascs.Trial\bin\Debug\Howatworks.Tascs.Build.pdb
+c:\Projects\Tascs\Howatworks.Tascs.Trial\bin\Debug\Howatworks.Tascs.Core.pdb
+c:\Projects\Tascs\Howatworks.Tascs.Trial\obj\Debug\Howatworks.Tascs.Trial.csprojResolveAssemblyReference.cache
+c:\Projects\Tascs\Howatworks.Tascs.Trial\obj\Debug\Howatworks.Tascs.Trial.exe
+c:\Projects\Tascs\Howatworks.Tascs.Trial\obj\Debug\Howatworks.Tascs.Trial.pdb

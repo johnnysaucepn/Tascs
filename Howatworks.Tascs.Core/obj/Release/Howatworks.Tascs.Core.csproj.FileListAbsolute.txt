@@ -1,0 +1,5 @@
+c:\projects\Tascs\BuildOutput\Howatworks.Tascs.Core.dll
+c:\projects\Tascs\BuildOutput\Howatworks.Tascs.Core.pdb
+c:\projects\Tascs\Howatworks.Tascs.Core\obj\Release\Howatworks.Tascs.Core.csprojResolveAssemblyReference.cache
+c:\projects\Tascs\Howatworks.Tascs.Core\obj\Release\Howatworks.Tascs.Core.dll
+c:\projects\Tascs\Howatworks.Tascs.Core\obj\Release\Howatworks.Tascs.Core.pdb
