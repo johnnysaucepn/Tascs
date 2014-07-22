@@ -1,15 +1,15 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Howatworks.Tascs.Build")]
+[assembly: AssemblyTitle("Howatworks.Tascs.MSBuild")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Optos, Inc.")]
-[assembly: AssemblyProduct("Howatworks.Tascs.Build")]
+[assembly: AssemblyProduct("Howatworks.Tascs.MSBuild")]
 [assembly: AssemblyCopyright("Copyright © Optos, Inc. 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

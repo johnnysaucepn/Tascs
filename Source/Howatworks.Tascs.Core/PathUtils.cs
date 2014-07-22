@@ -10,5 +10,10 @@ namespace Howatworks.Tascs.Core
         {
             return new DirectoryInfo(Path.Combine(Root, path)).FullName;
         }
+
+        public static string Resolve(string root, string path)
+        {
+            return new DirectoryInfo(Path.Combine(root, path)).FullName;
+        }
     }
 }
