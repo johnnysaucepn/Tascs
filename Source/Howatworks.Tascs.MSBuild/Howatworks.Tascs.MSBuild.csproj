@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{39DE4F3A-A1FA-470D-B060-7D6F954F5392}</ProjectGuid>
+    <ProjectGuid>{CA0653AA-E6DE-4DBE-AECC-BFD2C2143D1F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Howatworks.Tascs.Build</RootNamespace>
-    <AssemblyName>Howatworks.Tascs.Build</AssemblyName>
+    <RootNamespace>Howatworks.Tascs.MSBuild</RootNamespace>
+    <AssemblyName>Howatworks.Tascs.MSBuild</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Build.cs" />
+    <Compile Include="MSBuildExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
