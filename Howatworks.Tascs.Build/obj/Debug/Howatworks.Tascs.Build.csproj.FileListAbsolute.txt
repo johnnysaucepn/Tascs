@@ -1,7 +1,0 @@
-c:\Projects\Tascs\Howatworks.Tascs.Build\bin\Debug\Howatworks.Tascs.Build.dll
-c:\Projects\Tascs\Howatworks.Tascs.Build\bin\Debug\Howatworks.Tascs.Build.pdb
-c:\Projects\Tascs\Howatworks.Tascs.Build\bin\Debug\Howatworks.Tascs.Core.dll
-c:\Projects\Tascs\Howatworks.Tascs.Build\bin\Debug\Howatworks.Tascs.Core.pdb
-c:\Projects\Tascs\Howatworks.Tascs.Build\obj\Debug\Howatworks.Tascs.Build.csprojResolveAssemblyReference.cache
-c:\Projects\Tascs\Howatworks.Tascs.Build\obj\Debug\Howatworks.Tascs.Build.dll
-c:\Projects\Tascs\Howatworks.Tascs.Build\obj\Debug\Howatworks.Tascs.Build.pdb
