@@ -16,7 +16,7 @@ namespace Howatworks.Tascs.Core
 
         public static Target Named(string name)
         {
-            Target newTarget = new Target {Name = name};
+            var newTarget = new Target {Name = name};
             return newTarget;
         }
 
