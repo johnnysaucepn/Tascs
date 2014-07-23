@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,44 +11,61 @@ namespace Howatworks.Tascs.Core
 {
     public static class DefaultExtensions
     {
-        public static Target Exec(this Target target, string command, IEnumerable<string> cmdParams = null,
-            bool quoteSpaces = true, bool showWindow = false)
+        public static Target Exec(this Target target, string command, params Arg[] cmdParams)
         {
-
-            var formattedParams = (cmdParams != null)
-                ? string.Join(" ", (!quoteSpaces ? cmdParams : cmdParams.Select(QuoteIfWhitespace).ToArray()))
-                : "";
+            var formattedParams =
+                (cmdParams != null)
+                    ? string.Join(" ", cmdParams.Select(x => x.Value).ToArray())
+                    : "";
             
             var processStartInfo = new ProcessStartInfo(command, formattedParams)
             {
-                CreateNoWindow = !showWindow,
+                CreateNoWindow = true,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true
             };
 
-            var process = new Process
+            using (var process = new Process())
             {
-                EnableRaisingEvents = true,
-                StartInfo = processStartInfo,
-            };
+                process.StartInfo = processStartInfo;
+                process.EnableRaisingEvents = false;
+                process.StartInfo.WorkingDirectory = PathUtils.Root;
+                process.Start();
 
-            process.OutputDataReceived += process_OutputDataReceived;
-            process.ErrorDataReceived += process_OutputDataReceived;
+                // Handle Standard Output
+                process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
+                process.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
 
-            process.Start();
-
-            process.WaitForExit();
-
-            // Retrieve the app's exit code
-            var exitCode = process.ExitCode;
+                process.WaitForExit();
+            }
 
             return target;
         }
 
-        static void process_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        public static Target ExecWindowed(this Target target, string command, params Arg[] cmdParams)
         {
-            Console.WriteLine(e.Data);
+            var formattedParams =
+                (cmdParams != null)
+                    ? string.Join(" ", cmdParams.Select(x => x.Value).ToArray())
+                    : "";
+
+            var processStartInfo = new ProcessStartInfo(command, formattedParams)
+            {
+                CreateNoWindow = false
+            };
+
+            using (var process = new Process())
+            {
+                process.StartInfo = processStartInfo;
+                process.EnableRaisingEvents = false;
+                process.StartInfo.WorkingDirectory = PathUtils.Root;
+                process.Start();
+            }
+
+            return target;
         }
 
         private static string QuoteIfWhitespace(string s)

@@ -1,13 +1,11 @@
 using System;
-using System.CodeDom;
 using System.IO;
-using System.Text;
 using Howatworks.Tascs.Core;
 using Howatworks.Tascs.MSBuild;
 
 namespace Howatworks.Tascs.Trial
 {
-    internal class Program
+    internal static class Program
     {
         private static void Main(string[] args)
         {
@@ -18,7 +16,7 @@ namespace Howatworks.Tascs.Trial
                 .BuildProject(@"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", @"BuildOutput")
                 //.ArchiveOutput(@"Source\Howatworks.Tascs.Core\bin\Debug\**");
                 //.GenerateAssemblyInfo("1.2.3.4")
-                .Exec(@"notepad.exe");
+                .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"stupid wibble"));
                 
 
             Console.WriteLine("Press any key...");

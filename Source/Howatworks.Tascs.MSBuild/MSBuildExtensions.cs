@@ -43,5 +43,11 @@ namespace Howatworks.Tascs.MSBuild
 
             return target;
         }
+
+        public static Target UpdateVersionNumber(this Target target, int major, int minor, int build, int revision)
+        {
+            
+            return target;
+        }
     }
 }
