@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -17,7 +18,12 @@ namespace Howatworks.Tascs.Core
                 return attrs.Length < 1 ? null : attrs[0].Value.ToString();
             }
 
-            set { base[key] = value; }
+// ReSharper disable once MemberCanBePrivate.Global
+            set
+            {
+                if (value == null) throw new ArgumentNullException("value");
+                base[key] = value;
+            }
         }
 
         public static TascOptions<T> Merge(params TascOptions<T>[] optionsList)

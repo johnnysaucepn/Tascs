@@ -13,57 +13,20 @@ namespace Howatworks.Tascs.Core
     {
         public static Target Exec(this Target target, string command, params Arg[] cmdParams)
         {
-            var formattedParams =
-                (cmdParams != null)
-                    ? string.Join(" ", cmdParams.Select(x => x.Value).ToArray())
-                    : "";
-            
-            var processStartInfo = new ProcessStartInfo(command, formattedParams)
+            target.AddTasc(new ExecTasc(command, cmdParams)
             {
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-
-            using (var process = new Process())
-            {
-                process.StartInfo = processStartInfo;
-                process.EnableRaisingEvents = false;
-                process.StartInfo.WorkingDirectory = PathUtils.Root;
-                process.Start();
-
-                // Handle Standard Output
-                process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
-                process.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
-
-                process.WaitForExit();
-            }
+                RunWindowed = false
+            });
 
             return target;
         }
 
         public static Target ExecWindowed(this Target target, string command, params Arg[] cmdParams)
         {
-            var formattedParams =
-                (cmdParams != null)
-                    ? string.Join(" ", cmdParams.Select(x => x.Value).ToArray())
-                    : "";
-
-            var processStartInfo = new ProcessStartInfo(command, formattedParams)
+            target.AddTasc(new ExecTasc(command, cmdParams)
             {
-                CreateNoWindow = false
-            };
-
-            using (var process = new Process())
-            {
-                process.StartInfo = processStartInfo;
-                process.EnableRaisingEvents = false;
-                process.StartInfo.WorkingDirectory = PathUtils.Root;
-                process.Start();
-            }
+                RunWindowed = true
+            });
 
             return target;
         }

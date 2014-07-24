@@ -9,6 +9,7 @@ namespace Howatworks.Tascs.Core
     public class Target
     {
         public string Name { get; set; }
+        private readonly IList<ITasc> _tascs = new List<ITasc>();
 
         private Target()
         {
@@ -20,6 +21,20 @@ namespace Howatworks.Tascs.Core
             return newTarget;
         }
 
+        public void AddTasc(ITasc tasc)
+        {
+            _tascs.Add(tasc);
+        }
+
+        public ITascResult Execute()
+        {
+            ITascResult result = null;
+            foreach (var tasc in _tascs)
+            {
+                result = tasc.Execute();
+            }
+            return result;
+        }
     }
 
 }
