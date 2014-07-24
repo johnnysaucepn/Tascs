@@ -16,20 +16,35 @@ namespace Howatworks.Tascs.MSBuild
     {
         public static Target BuildProject(this Target target, string projectFilePath, string outputPath, string configuration = "Release", string platform = "AnyCPU", string targets = "Clean,Build")
         {
+            return target.BuildProject(new TascOptions<MSBuildOption>
+            {
+                {MSBuildOption.ProjectFilePath, projectFilePath},
+                {MSBuildOption.OutputPath, outputPath},
+                {MSBuildOption.Configuration, configuration},
+                {MSBuildOption.Platform, platform},
+                {MSBuildOption.Targets, targets}
+            });
+            
+        }
+
+        public static Target BuildProject(this Target target, TascOptions<MSBuildOption> options)
+        {
             var loggers = new List<ILogger> { new ConsoleLogger() };
 
-            string projectFile = PathUtils.Resolve(projectFilePath);
+            string projectFile = PathUtils.Resolve(options[MSBuildOption.ProjectFilePath]);
 
             var globalProperty = new Dictionary<string, string>
             {
-                {"Configuration", configuration},
-                {"Platform", platform},
-                {"OutputPath", PathUtils.Resolve(outputPath)}
+                {"Configuration", options[MSBuildOption.Configuration]},
+                {"Platform", options[MSBuildOption.Platform]},
+                {"OutputPath", PathUtils.Resolve(options[MSBuildOption.OutputPath])}
             };
+
+            var targets = options[MSBuildOption.Targets].Split(',').Select(x => x.Trim());
 
             try
             {
-                var buildRequest = new BuildRequestData(projectFile, globalProperty, null, targets.Split(','), null);
+                var buildRequest = new BuildRequestData(projectFile, globalProperty, null, targets.ToArray(), null);
 
                 //register file logger using BuildParameters
                 var buildParams = new BuildParameters { Loggers = loggers };
@@ -42,12 +57,8 @@ namespace Howatworks.Tascs.MSBuild
             }
 
             return target;
+
         }
 
-        public static Target UpdateVersionNumber(this Target target, int major, int minor, int build, int revision)
-        {
-            
-            return target;
-        }
     }
 }
