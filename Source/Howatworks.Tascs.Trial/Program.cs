@@ -13,27 +13,27 @@ namespace Howatworks.Tascs.Trial
             // Get the user's current directory, not the path of the script
             PathUtils.Root = PathUtils.Resolve(Directory.GetCurrentDirectory(), @"..\..\..\..");
 
-            var defaultBuildOptions = new TascOptions<MSBuildOption>
+            var defaultBuildOptions = new MSBuildOptions
             {
-                {MSBuildOption.OutputPath, @"BuildOutput\Debug"},
-                {MSBuildOption.Configuration, @"Debug"},
-                {MSBuildOption.Platform, @"AnyCPU"},
-                {MSBuildOption.Targets, "Clean, Build"}
+                OutputFolder = @"BuildOutput\Debug",
+                Configuration = @"Debug",
+                Platform = @"AnyCPU",
+                BuildTargets = "Clean, Build"
             };
 
             var weird = Target.Named("Weird")
-                .BuildProject(new TascOptions<MSBuildOption>
+                .BuildProject(new MSBuildOptions
                 {
-                    {MSBuildOption.ProjectFilePath, @"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj"},
-                    {MSBuildOption.OutputPath, @"BuildOutput\Release"}
+                    ProjectFile = @"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj",
+                    OutputFolder = @"BuildOutput\Release"
                 })
                 .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"stupid wibble"));
 
             var minimal = Target.Named("Minimal")
                 .DependsOn(weird)
-                .BuildProject(TascOptions<MSBuildOption>.Merge(defaultBuildOptions, new TascOptions<MSBuildOption>
+                .BuildProject(MSBuildOptions.Merge(defaultBuildOptions, new MSBuildOptions
                 {
-                    {MSBuildOption.ProjectFilePath, @"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj"}
+                    ProjectFile = @"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj"
                 }));
 
             minimal.Execute();

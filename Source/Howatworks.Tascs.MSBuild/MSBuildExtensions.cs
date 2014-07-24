@@ -14,22 +14,20 @@ namespace Howatworks.Tascs.MSBuild
 {
     public static class MSBuildExtensions
     {
-        public static Target BuildProject(this Target target, string projectFilePath, string outputPath, string configuration = "Release", string platform = "AnyCPU", string targets = "Clean,Build")
+        public static Target BuildProject(this Target target, string projectFilePath, string outputPath)
         {
-            target.AddTasc(new MSBuildTasc(new TascOptions<MSBuildOption>
+            var options = new MSBuildOptions()
             {
-                {MSBuildOption.ProjectFilePath, projectFilePath},
-                {MSBuildOption.OutputPath, outputPath},
-                {MSBuildOption.Configuration, configuration},
-                {MSBuildOption.Platform, platform},
-                {MSBuildOption.Targets, targets}
-            }));
+                ProjectFile = projectFilePath,
+                OutputFolder = outputPath
+            };
+            target.AddTasc(new MSBuildTasc(options));
 
             return target;
             
         }
 
-        public static Target BuildProject(this Target target, TascOptions<MSBuildOption> options)
+        public static Target BuildProject(this Target target, MSBuildOptions options)
         {
             target.AddTasc(new MSBuildTasc(options));
 

@@ -12,9 +12,9 @@ namespace Howatworks.Tascs.MSBuild
 {
     public class MSBuildTasc : ITasc
     {
-        protected TascOptions<MSBuildOption> Options { get; set; }
+        protected MSBuildOptions Options { get; set; }
 
-        public MSBuildTasc(TascOptions<MSBuildOption> options)
+        public MSBuildTasc(MSBuildOptions options)
         {
             Options = options;
         }
@@ -23,16 +23,16 @@ namespace Howatworks.Tascs.MSBuild
         {
             var loggers = new List<ILogger> { new ConsoleLogger() };
 
-            string projectFile = PathUtils.Resolve(Options[MSBuildOption.ProjectFilePath]);
+            string projectFile = PathUtils.Resolve(Options.ProjectFile);
 
             var globalProperty = new Dictionary<string, string>
             {
-                {"Configuration", Options[MSBuildOption.Configuration]},
-                {"Platform", Options[MSBuildOption.Platform]},
-                {"OutputPath", PathUtils.Resolve(Options[MSBuildOption.OutputPath])}
+                {"Configuration", Options.Configuration},
+                {"Platform", Options.Platform},
+                {"OutputPath", PathUtils.Resolve(Options.OutputFolder)}
             };
 
-            var targets = Options[MSBuildOption.Targets].Split(',').Select(x => x.Trim());
+            var targets = Options.BuildTargets.Split(',').Select(x => x.Trim());
 
             try
             {
