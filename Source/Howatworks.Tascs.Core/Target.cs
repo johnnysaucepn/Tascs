@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Howatworks.Tascs.Core
 {
     public class Target
     {
-        public string Name { get; set; }
+        private readonly IList<Target> _postDependencies = new List<Target>();
+        private readonly IList<Target> _preDependencies = new List<Target>();
         private readonly IList<ITasc> _tascs = new List<ITasc>();
 
         private Target()
         {
         }
+
+        public string Name { get; set; }
 
         public static Target Named(string name)
         {
@@ -29,12 +28,54 @@ namespace Howatworks.Tascs.Core
         public ITascResult Execute()
         {
             ITascResult result = null;
-            foreach (var tasc in _tascs)
+            foreach (Target dep in _preDependencies)
             {
-                result = tasc.Execute();
+                result = dep.Execute();
             }
+            try
+            {
+                foreach (ITasc tasc in _tascs)
+                {
+                    result = tasc.Execute();
+                }
+            }
+            finally
+            {
+                foreach (ITasc tasc in _tascs)
+                {
+                    tasc.Cleanup();
+                }
+            }
+
+            foreach (Target dep in _postDependencies)
+            {
+                result = dep.Execute();
+            }
+
             return result;
         }
-    }
 
+        public Target DependsOn(Target dependency)
+        {
+            // TODO: identify circular references
+
+            if (!_preDependencies.Contains(dependency) && ! _postDependencies.Contains(dependency))
+            {
+                _preDependencies.Add(dependency);
+            }
+            return this;
+        }
+
+        public Target PostDependsOn(Target dependency)
+        {
+            // TODO: identify circular references
+
+            if (!_postDependencies.Contains(dependency) && !_postDependencies.Contains(dependency))
+            {
+                _postDependencies.Add(dependency);
+            }
+
+            return this;
+        }
+    }
 }

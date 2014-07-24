@@ -15,6 +15,7 @@ namespace Howatworks.Tascs.Core
     public interface ITasc
     {
         ITascResult Execute();
+        void Cleanup();
 
     }
 }

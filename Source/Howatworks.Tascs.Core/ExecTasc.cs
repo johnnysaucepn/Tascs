@@ -73,5 +73,11 @@ namespace Howatworks.Tascs.Core
             return result;
 
         }
+
+
+        public void Cleanup()
+        {
+            
+        }
     }
 }

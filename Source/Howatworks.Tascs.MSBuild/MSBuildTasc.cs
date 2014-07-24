@@ -49,5 +49,11 @@ namespace Howatworks.Tascs.MSBuild
             {
             }
         }
+
+
+        public void Cleanup()
+        {
+            
+        }
     }
 }
