@@ -8,7 +8,7 @@ namespace Howatworks.Tascs.Trial
 {
     internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             // Get the user's current directory, not the path of the script
             PathUtils.Root = PathUtils.Resolve(Directory.GetCurrentDirectory(), @"..\..\..\..");
@@ -21,26 +21,21 @@ namespace Howatworks.Tascs.Trial
                 {MSBuildOption.Targets, "Clean, Build"}
             };
 
-
-            //Target.Named("Default")
-            //    .BuildProject(@"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", @"BuildOutput")
-                //.ArchiveOutput(@"Source\Howatworks.Tascs.Core\bin\Debug\**");
-                //.GenerateAssemblyInfo("1.2.3.4")
-            //    .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"stupid wibble"));
-
-            Target.Named("Weird")
+            var weird = Target.Named("Weird")
                 .BuildProject(new TascOptions<MSBuildOption>
                 {
                     {MSBuildOption.ProjectFilePath, @"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj"},
                     {MSBuildOption.OutputPath, @"BuildOutput\Release"}
-                });
+                })
+                .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"stupid wibble"));
 
-            Target.Named("Minimal")
+            var minimal = Target.Named("Minimal")
                 .BuildProject(TascOptions<MSBuildOption>.Merge(defaultBuildOptions, new TascOptions<MSBuildOption>
                 {
                     {MSBuildOption.ProjectFilePath, @"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj"}
                 }));
-            
+
+            weird.Execute();
 
             Console.WriteLine("Press any key...");
             Console.ReadKey();

@@ -46,10 +46,12 @@
   <ItemGroup>
     <Compile Include="Arg.cs" />
     <Compile Include="DefaultExtensions.cs" />
+    <Compile Include="ExecOption.cs" />
+    <Compile Include="ExecTasc.cs" />
+    <Compile Include="ITasc.cs" />
     <Compile Include="PathUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Target.cs" />
-    <Compile Include="TascAlias.cs" />
     <Compile Include="TascOptions.cs" />
   </ItemGroup>
   <ItemGroup>
