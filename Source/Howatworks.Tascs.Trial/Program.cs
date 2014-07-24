@@ -30,12 +30,13 @@ namespace Howatworks.Tascs.Trial
                 .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"stupid wibble"));
 
             var minimal = Target.Named("Minimal")
+                .DependsOn(weird)
                 .BuildProject(TascOptions<MSBuildOption>.Merge(defaultBuildOptions, new TascOptions<MSBuildOption>
                 {
                     {MSBuildOption.ProjectFilePath, @"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj"}
                 }));
 
-            weird.Execute();
+            minimal.Execute();
 
             Console.WriteLine("Press any key...");
             Console.ReadKey();
