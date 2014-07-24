@@ -17,7 +17,7 @@ namespace Howatworks.Tascs.Core
                 return attrs.Length < 1 ? null : attrs[0].Value.ToString();
             }
 
-            private set { base[key] = value; }
+            set { base[key] = value; }
         }
 
         public static TascOptions<T> Merge(params TascOptions<T>[] optionsList)
