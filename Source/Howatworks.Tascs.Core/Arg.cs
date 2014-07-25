@@ -6,25 +6,18 @@ using System.Threading.Tasks;
 
 namespace Howatworks.Tascs.Core
 {
-    public class Arg
+    public static class Arg
     {
         private const char Quote = '"';
 
-        public string Value { get; private set; }
-
-        private Arg(string arg)
+        public static string Literal(string arg)
         {
-            Value = arg;
+            return arg;
         }
 
-        public static Arg Literal(string arg)
+        public static string Quoted(string arg)
         {
-            return new Arg(arg);
-        }
-
-        public static Arg Quoted(string arg)
-        {
-            return new Arg(string.Format("{0}{1}{0}", Quote, arg));
+            return string.Format("{0}{1}{0}", Quote, arg);
         }
 
     }

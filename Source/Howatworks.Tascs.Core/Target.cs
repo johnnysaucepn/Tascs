@@ -1,23 +1,59 @@
 ﻿using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using TopologicalSorting;
 
 namespace Howatworks.Tascs.Core
 {
     public class Target
     {
-        private readonly IList<Target> _postDependencies = new List<Target>();
-        private readonly IList<Target> _preDependencies = new List<Target>();
+        private static readonly Dictionary<string, Target> KnownTargets = new Dictionary<string, Target>();
+
+        private readonly DependencyGraph<Target> _dependencyGraph = new DependencyGraph<Target>();
         private readonly IList<ITasc> _tascs = new List<ITasc>();
+        private readonly OrderedProcess<Target> _thisProcess;
 
         private Target()
         {
+            _thisProcess = new OrderedProcess<Target>(_dependencyGraph, this);
         }
 
-        public string Name { get; set; }
+        public string Name { get; protected set; }
+
+        public static Target Create(string name)
+        {
+            var uncasedName = name.ToLower();
+            if (KnownTargets.ContainsKey(uncasedName))
+            {
+                throw new DuplicateTargetException(name);
+            }
+
+            var newTarget = new Target {Name = name};
+            KnownTargets[uncasedName] = newTarget;
+
+            return newTarget;
+        }
 
         public static Target Named(string name)
         {
-            var newTarget = new Target {Name = name};
-            return newTarget;
+            var uncasedName = name.ToLower();
+            if (KnownTargets.ContainsKey(uncasedName))
+            {
+                return KnownTargets[uncasedName];
+            }
+
+            throw new TargetNotFoundException(name);
+        }
+
+        public static void Execute(params string[] targetNames)
+        {
+            // TODO: proper graph dependency
+
+            foreach (var name in targetNames)
+            {
+                Target.Named(name).Execute();
+            }
+
         }
 
         public void AddTasc(ITasc tasc)
@@ -28,28 +64,31 @@ namespace Howatworks.Tascs.Core
         public ITascResult Execute()
         {
             ITascResult result = null;
-            foreach (Target dep in _preDependencies)
+            // Ensure all dependent targets are built first
+
+            IEnumerable<IEnumerable<OrderedProcess<Target>>> sortedProcesses = _dependencyGraph.CalculateSort();
+ 
+            
+            foreach (var depSet in sortedProcesses)
             {
-                result = dep.Execute();
+                foreach (var dep in depSet.TakeWhile(dep => dep != _thisProcess))
+                {
+                    result = dep.Item.Execute();
+                }
             }
             try
             {
-                foreach (ITasc tasc in _tascs)
+                foreach (var tasc in _tascs)
                 {
                     result = tasc.Execute();
                 }
             }
             finally
             {
-                foreach (ITasc tasc in _tascs)
+                foreach (var tasc in _tascs)
                 {
                     tasc.Cleanup();
                 }
-            }
-
-            foreach (Target dep in _postDependencies)
-            {
-                result = dep.Execute();
             }
 
             return result;
@@ -59,21 +98,9 @@ namespace Howatworks.Tascs.Core
         {
             // TODO: identify circular references
 
-            if (!_preDependencies.Contains(dependency) && ! _postDependencies.Contains(dependency))
-            {
-                _preDependencies.Add(dependency);
-            }
-            return this;
-        }
+            var dependentProcess = new OrderedProcess<Target>(_dependencyGraph, dependency);
 
-        public Target PostDependsOn(Target dependency)
-        {
-            // TODO: identify circular references
-
-            if (!_postDependencies.Contains(dependency) && !_postDependencies.Contains(dependency))
-            {
-                _postDependencies.Add(dependency);
-            }
+            dependentProcess.Before(_thisProcess);
 
             return this;
         }
