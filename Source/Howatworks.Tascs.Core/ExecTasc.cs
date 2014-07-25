@@ -10,10 +10,10 @@ namespace Howatworks.Tascs.Core
     public class ExecTasc : ITasc
     {
         public string Command { get; internal set; }
-        public IEnumerable<Arg> CommandParams { get; internal set; }
+        public IEnumerable<string> CommandParams { get; internal set; }
         public bool RunWindowed { get; internal set; }
 
-        public ExecTasc(string command, params Arg[] args)
+        public ExecTasc(string command, params string[] args)
         {
             Command = command;
             CommandParams = args;
@@ -25,7 +25,7 @@ namespace Howatworks.Tascs.Core
 
             var formattedParams =
                 (CommandParams != null)
-                    ? string.Join(" ", CommandParams.Select(x => x.Value).ToArray())
+                    ? string.Join(" ", CommandParams)
                     : "";
 
             if (RunWindowed)
