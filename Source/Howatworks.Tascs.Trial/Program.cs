@@ -32,17 +32,20 @@ namespace Howatworks.Tascs.Trial
             Target.Create("Minimal")
                 .DependsOn(Target.Named("Weird"))
                 .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do minimal"))
-                .BuildProject(MSBuildOptions.Merge(defaultBuildOptions, new MSBuildOptions
+                .BuildProject(new MSBuildOptions(defaultBuildOptions)
                 {
                     ProjectFile = @"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj"
-                }));
+                });
 
             Target.Create("Unnecessary")
                 .DependsOn(Target.Named("Weird"))
                 .Exec(@"cmd.exe", @"/c", @"echo", Arg.Quoted(@"do unnecessary - don't do this"));
 
             Target.Create("Chained")
-                .DependsOn(Target.Create("Downstream").Echo("Downstream!"))
+                .DependsOn(
+                    Target.Create("Downstream")
+                    .Echo("Downstream!")
+                    )
                 .Echo("Chained!");
 
             Target.Execute("Chained", "Minimal");

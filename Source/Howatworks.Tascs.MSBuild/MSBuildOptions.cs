@@ -22,6 +22,15 @@ namespace Howatworks.Tascs.MSBuild
             BuildTargets = "Clean,Build";
         }
 
+        public MSBuildOptions(MSBuildOptions incoming)
+        {
+            ProjectFile = incoming.ProjectFile;
+            OutputFolder = incoming.OutputFolder;
+            Configuration = incoming.Configuration;
+            Platform = incoming.Platform;
+            BuildTargets = incoming.BuildTargets;
+        }
+
         public static MSBuildOptions Merge(MSBuildOptions original, MSBuildOptions incoming)
         {
             var newOptions = (MSBuildOptions)original.MemberwiseClone();
