@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Howatworks.Tascs.Core
 {
-    public class EchoTasc : ITasc
+    public class EchoTasc : Tasc
     {
         public string Line { get; protected set; }
 
@@ -16,15 +16,16 @@ namespace Howatworks.Tascs.Core
         }
 
 
-        public ITascResult Execute()
+        protected override ITascResult ExecuteThisTasc()
         {
             Console.WriteLine(Line);
             return null;
         }
 
-        public void Cleanup()
+        public override void Cleanup()
         {
             
         }
+
     }
 }

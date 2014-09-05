@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Howatworks.Tascs.MSBuild
 {
-    public class MSBuildTasc : ITasc
+    public class MSBuildTasc : Tasc
     {
         protected MSBuildOptions Options { get; set; }
 
@@ -19,7 +19,7 @@ namespace Howatworks.Tascs.MSBuild
             Options = options;
         }
 
-        public ITascResult Execute()
+        protected override ITascResult ExecuteThisTasc()
         {
             var loggers = new List<ILogger> { new ConsoleLogger() };
 
@@ -51,7 +51,7 @@ namespace Howatworks.Tascs.MSBuild
         }
 
 
-        public void Cleanup()
+        public override void Cleanup()
         {
             
         }
