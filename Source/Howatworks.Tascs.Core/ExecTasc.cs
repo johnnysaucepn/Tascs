@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Howatworks.Tascs.Core
 {
-    public class ExecTasc : ITasc
+    public class ExecTasc : Tasc
     {
         public string Command { get; internal set; }
         public IEnumerable<string> CommandParams { get; internal set; }
@@ -19,7 +19,7 @@ namespace Howatworks.Tascs.Core
             CommandParams = args;
         }
 
-        public ITascResult Execute()
+        protected override ITascResult ExecuteThisTasc()
         {
             ITascResult result = null;
 
@@ -75,7 +75,7 @@ namespace Howatworks.Tascs.Core
         }
 
 
-        public void Cleanup()
+        public override void Cleanup()
         {
             
         }

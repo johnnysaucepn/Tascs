@@ -66,8 +66,10 @@
     <Compile Include="ITasc.cs" />
     <Compile Include="PathUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TascTarget.cs" />
     <Compile Include="Target.cs" />
     <Compile Include="TargetNotFoundException.cs" />
+    <Compile Include="Tasc.cs" />
     <Compile Include="TascOptions.cs" />
   </ItemGroup>
   <ItemGroup>
