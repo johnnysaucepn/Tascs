@@ -55,7 +55,6 @@ namespace Howatworks.Tascs.Core
             else
             {
                 dependencyTarget = _targets[dependentTargetName];
-
             }
 
             _dependencies.AddVerticesAndEdge(new SEdge<string>(tascTarget.Name, dependencyTarget.Name));
@@ -63,17 +62,32 @@ namespace Howatworks.Tascs.Core
 
         public void Build(IEnumerable<string> targetNames)
         {
-            var baseTargetNames = targetNames.Where(_targets.ContainsKey);
-            //var baseTargets = baseTargetNames
-            //    .Select(x => _targets[x])
-            //    .ToList();
+            var subgraph = GetDependencyGraph(targetNames);
 
-            foreach (var target in _dependencies.TopologicalSort().Reverse())
+            foreach (var target in subgraph.TopologicalSort().Reverse())
             {
-                //Console.WriteLine(target);
                 _targets[target].Build();
             }
+        }
 
+        private AdjacencyGraph<string, SEdge<string>> GetDependencyGraph(IEnumerable<string> targetNames)
+        {
+            var baseTargetNames = targetNames.Where(_targets.ContainsKey);
+            
+            var subgraph = new AdjacencyGraph<string, SEdge<string>>();
+
+            foreach (var baseTarget in baseTargetNames)
+            {
+                var search = new BreadthFirstSearchAlgorithm<string, SEdge<string>>(_dependencies);
+                search.SetRootVertex(baseTarget);
+                search.TreeEdge += x =>
+                {
+                    Console.WriteLine("{0}->{1}", x.Source, x.Target);
+                    subgraph.AddVerticesAndEdge(x);
+                };
+                search.Compute();
+            }
+            return subgraph;
         }
 
         public void Build(params string[] targetNames)

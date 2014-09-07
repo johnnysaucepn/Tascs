@@ -51,9 +51,13 @@ namespace Howatworks.Tascs.Trial
 
             project.Target("Chained")
                 .DependsOn("Downstream")
-                //.DependsOn("NonExistent")
+                
                 .Echo("Chained!")
                 .Do(new GenericTasc(() => Console.WriteLine("Oh, and this happened.")));
+
+            project.Target("Unconnected")
+                .DependsOn("NonExistent")
+                .Echo("I know nothing!");
 
             project.Build("Deploy", "Chained");
 
