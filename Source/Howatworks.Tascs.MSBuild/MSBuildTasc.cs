@@ -19,17 +19,17 @@ namespace Howatworks.Tascs.MSBuild
             Options = options;
         }
 
-        protected override ITascResult ExecuteThisTasc()
+        public override ITascResult Execute()
         {
             var loggers = new List<ILogger> { new ConsoleLogger() };
 
-            string projectFile = PathUtils.Resolve(Options.ProjectFile);
+            string projectFile = PathUtils.Resolve(TascProject.Instance.Root, Options.ProjectFile);
 
             var globalProperty = new Dictionary<string, string>
             {
                 {"Configuration", Options.Configuration},
                 {"Platform", Options.Platform},
-                {"OutputPath", PathUtils.Resolve(Options.OutputFolder)}
+                {"OutputPath", PathUtils.Resolve(TascProject.Instance.Root, Options.OutputFolder)}
             };
 
             var targets = Options.BuildTargets.Split(',').Select(x => x.Trim());
@@ -50,10 +50,5 @@ namespace Howatworks.Tascs.MSBuild
             }
         }
 
-
-        public override void Cleanup()
-        {
-            
-        }
     }
 }

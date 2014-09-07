@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Howatworks.Tascs.Common
+namespace Howatworks.Tascs.Core
 {
-    public class Class1
+    public class TascLogger : List<ITascResult>
     {
     }
 }

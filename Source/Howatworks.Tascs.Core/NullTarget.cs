@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Howatworks.Tascs.Core
+{
+    internal class NullTarget : ITascTarget
+    {
+        public string Name
+        {
+            get; set;
+        }
+
+        public NullTarget(string name)
+        {
+            Name = name;
+        }
+
+        public ITascResult Build()
+        {
+            throw new NotImplementedException(string.Format("The TascTarget \"{0}\" has not been defined yet", Name));
+        }
+    }
+}

@@ -19,7 +19,7 @@ namespace Howatworks.Tascs.Core
             CommandParams = args;
         }
 
-        protected override ITascResult ExecuteThisTasc()
+        public override ITascResult Execute()
         {
             ITascResult result = null;
 
@@ -39,7 +39,7 @@ namespace Howatworks.Tascs.Core
                 {
                     process.StartInfo = processStartInfo;
                     process.EnableRaisingEvents = false;
-                    process.StartInfo.WorkingDirectory = PathUtils.Root;
+                    process.StartInfo.WorkingDirectory = TascProject.Instance.Root;
                     process.Start();
                 }
             }
@@ -57,7 +57,7 @@ namespace Howatworks.Tascs.Core
                 {
                     process.StartInfo = processStartInfo;
                     process.EnableRaisingEvents = false;
-                    process.StartInfo.WorkingDirectory = PathUtils.Root;
+                    process.StartInfo.WorkingDirectory = TascProject.Instance.Root;
                     process.Start();
 
                     // Handle Standard Output
@@ -74,10 +74,5 @@ namespace Howatworks.Tascs.Core
 
         }
 
-
-        public override void Cleanup()
-        {
-            
-        }
     }
 }

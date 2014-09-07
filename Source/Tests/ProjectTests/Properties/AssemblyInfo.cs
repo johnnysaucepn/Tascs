@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Howatworks.Tascs.Common")]
+[assembly: AssemblyTitle("ProjectTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Optos, Inc.")]
-[assembly: AssemblyProduct("Howatworks.Tascs.Common")]
+[assembly: AssemblyProduct("ProjectTests")]
 [assembly: AssemblyCopyright("Copyright © Optos, Inc. 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("509b869e-d742-4a03-82c6-c3b93b1966e1")]
+[assembly: Guid("3ec051a7-f7cb-41ec-b402-13113af50e57")]
 
 // Version information for an assembly consists of the following four values:
 //

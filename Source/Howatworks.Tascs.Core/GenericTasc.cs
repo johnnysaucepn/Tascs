@@ -6,20 +6,22 @@ using System.Threading.Tasks;
 
 namespace Howatworks.Tascs.Core
 {
-    public class EchoTasc : Tasc
+    public class GenericTasc : Tasc
     {
-        public string Line { get; protected set; }
-
-        public EchoTasc(string line)
+        private Action _action;
+        public GenericTasc(Action action)
         {
-            Line = line;
+            _action = action;
         }
 
         public override ITascResult Execute()
         {
-            Console.WriteLine(Line);
+            if (_action != null)
+            {
+                _action();
+            }
+
             return null;
         }
-
     }
 }
