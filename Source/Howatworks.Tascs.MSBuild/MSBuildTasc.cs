@@ -12,18 +12,21 @@ namespace Howatworks.Tascs.MSBuild
 {
     public class MSBuildTasc : Tasc
     {
+        public string ProjectFile { get; set; }
+    
         protected MSBuildOptions Options { get; set; }
 
-        public MSBuildTasc(MSBuildOptions options)
+        public MSBuildTasc(string projectFile, MSBuildOptions options = null)
         {
-            Options = options;
+            ProjectFile = projectFile;
+            Options = options ?? new MSBuildOptions();
         }
 
         public override ITascResult Execute()
         {
             var loggers = new List<ILogger> { new ConsoleLogger() };
 
-            string projectFile = PathUtils.Resolve(TascProject.Instance.Root, Options.ProjectFile);
+            var projectFile = PathUtils.Resolve(TascProject.Instance.Root, ProjectFile);
 
             var globalProperty = new Dictionary<string, string>
             {
@@ -43,7 +46,7 @@ namespace Howatworks.Tascs.MSBuild
 
                 //build solution
                 var buildResult = BuildManager.DefaultBuildManager.Build(buildParams, buildRequest);
-                return buildResult as ITascResult;
+                return new MSBuildResult(buildResult);
             }
             finally
             {
