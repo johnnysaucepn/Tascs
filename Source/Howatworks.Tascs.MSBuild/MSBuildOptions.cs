@@ -9,7 +9,6 @@ namespace Howatworks.Tascs.MSBuild
 {
     public class MSBuildOptions
     {
-        public string ProjectFile { get; set; }
         public string OutputFolder { get; set; }
         public string Configuration { get; set; }
         public string Platform { get; set; }
@@ -24,7 +23,6 @@ namespace Howatworks.Tascs.MSBuild
 
         public MSBuildOptions(MSBuildOptions incoming)
         {
-            ProjectFile = incoming.ProjectFile;
             OutputFolder = incoming.OutputFolder;
             Configuration = incoming.Configuration;
             Platform = incoming.Platform;
@@ -34,7 +32,6 @@ namespace Howatworks.Tascs.MSBuild
         public static MSBuildOptions Merge(MSBuildOptions original, MSBuildOptions incoming)
         {
             var newOptions = (MSBuildOptions)original.MemberwiseClone();
-            newOptions.ProjectFile = newOptions.ProjectFile ?? incoming.ProjectFile;
             newOptions.OutputFolder = newOptions.OutputFolder ?? incoming.OutputFolder;
             newOptions.Configuration = newOptions.Configuration ?? incoming.Configuration;
             newOptions.Platform = newOptions.Platform ?? incoming.Platform;

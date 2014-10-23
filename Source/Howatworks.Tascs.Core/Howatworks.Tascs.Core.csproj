@@ -64,6 +64,7 @@
     <Compile Include="ExecOption.cs" />
     <Compile Include="ExecTasc.cs" />
     <Compile Include="GenericTasc.cs" />
+    <Compile Include="ITascCapability.cs" />
     <Compile Include="ITascResult.cs" />
     <Compile Include="ITascTarget.cs" />
     <Compile Include="NullTarget.cs" />

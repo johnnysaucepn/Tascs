@@ -18,7 +18,7 @@ namespace Howatworks.Tascs.Trial
 
             project.Root = PathUtils.Resolve(Directory.GetCurrentDirectory(), @"..\..\..\..");
             
-            var defaultBuildOptions = new MSBuildOptions
+            var debugBuildOptions = new MSBuildOptions
             {
                 OutputFolder = @"BuildOutput\Debug",
                 Configuration = @"Debug",
@@ -27,9 +27,8 @@ namespace Howatworks.Tascs.Trial
             };
 
             project.Target("Build")
-                .BuildProject(new MSBuildOptions
+                .BuildProject(@"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", new MSBuildOptions
                 {
-                    ProjectFile = @"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj",
                     OutputFolder = @"BuildOutput\Release"
                 })
                 .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do build"));
@@ -37,10 +36,7 @@ namespace Howatworks.Tascs.Trial
             project.Target("Deploy")
                 .DependsOn("Build")
                 .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do deploy"))
-                .BuildProject(new MSBuildOptions(defaultBuildOptions)
-                {
-                    ProjectFile = @"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj"
-                });
+                .BuildProject(@"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj", debugBuildOptions);
 
             project.Target("Unnecessary")
                 .DependsOn("Deploy")

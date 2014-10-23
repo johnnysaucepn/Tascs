@@ -46,9 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MSBuildCapability.cs" />
     <Compile Include="MSBuildExtensions.cs" />
     <Compile Include="MSBuildOption.cs" />
     <Compile Include="MSBuildOptions.cs" />
+    <Compile Include="MSBuildResult.cs" />
     <Compile Include="MSBuildTasc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
