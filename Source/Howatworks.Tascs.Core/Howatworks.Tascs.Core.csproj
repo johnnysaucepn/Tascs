@@ -58,11 +58,12 @@
   <ItemGroup>
     <Compile Include="Arg.cs" />
     <Compile Include="DuplicateTargetException.cs" />
-    <Compile Include="EchoTasc.cs" />
-    <Compile Include="EchoExtensions.cs" />
-    <Compile Include="ExecExtensions.cs" />
-    <Compile Include="ExecOption.cs" />
-    <Compile Include="ExecTasc.cs" />
+    <Compile Include="Echo\EchoTasc.cs" />
+    <Compile Include="Echo\EchoExtensions.cs" />
+    <Compile Include="Exec\ExecExtensions.cs" />
+    <Compile Include="Exec\ExecOption.cs" />
+    <Compile Include="Exec\ExecTasc.cs" />
+    <Compile Include="GenericExtensions.cs" />
     <Compile Include="GenericTasc.cs" />
     <Compile Include="ITascCapability.cs" />
     <Compile Include="ITascResult.cs" />
@@ -70,8 +71,11 @@
     <Compile Include="NullTarget.cs" />
     <Compile Include="PathUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TascException.cs" />
+    <Compile Include="TascFailureException.cs" />
     <Compile Include="TascLogger.cs" />
     <Compile Include="TascProject.cs" />
+    <Compile Include="TascResult.cs" />
     <Compile Include="TascTarget.cs" />
     <Compile Include="TargetNotFoundException.cs" />
     <Compile Include="Tasc.cs" />

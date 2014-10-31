@@ -6,15 +6,7 @@ using System.Threading.Tasks;
 
 namespace Howatworks.Tascs.Core
 {
-    public abstract class Tasc
+    public class TascFailureException : TascException
     {
-
-        public abstract ITascResult Execute(TascTarget target);
-
-        public virtual void Cleanup()
-        {
-            
-        }
     }
-
 }
