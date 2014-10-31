@@ -1,4 +1,5 @@
 ﻿using System;
+using Howatworks.Tascs.Core.Echo;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Howatworks.Tascs.Core;
 

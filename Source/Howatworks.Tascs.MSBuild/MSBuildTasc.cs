@@ -22,7 +22,7 @@ namespace Howatworks.Tascs.MSBuild
             Options = options ?? new MSBuildOptions();
         }
 
-        public override ITascResult Execute()
+        public override ITascResult Execute(TascTarget target)
         {
             var loggers = new List<ILogger> { new ConsoleLogger() };
 

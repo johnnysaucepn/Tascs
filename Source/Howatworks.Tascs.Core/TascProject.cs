@@ -29,7 +29,7 @@ namespace Howatworks.Tascs.Core
 
         }
 
-        public TascTarget Target(string name)
+        public ITascTarget Target(string name)
         {
             var target = TascTarget.Create(name);
             if (_targets.ContainsKey(name))

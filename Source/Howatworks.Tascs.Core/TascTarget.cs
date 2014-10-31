@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Howatworks.Tascs.Core
 {
@@ -12,7 +13,7 @@ namespace Howatworks.Tascs.Core
 
         public string Name { get; set; }
 
-        public static TascTarget Create(string name)
+        public static ITascTarget Create(string name)
         {
             return new TascTarget { Name = name };
         }
@@ -25,7 +26,7 @@ namespace Howatworks.Tascs.Core
             {
                 try
                 {
-                    result = tasc.Execute();
+                    result = tasc.Execute(this);
                 }
                 finally
                 {
@@ -35,7 +36,7 @@ namespace Howatworks.Tascs.Core
             return result;
         }
 
-        public TascTarget DependsOn(string dependency)
+        public ITascTarget DependsOn(string dependency)
         {
             // TODO: identify circular references
 
@@ -44,12 +45,11 @@ namespace Howatworks.Tascs.Core
             return this;
         }
 
-        public TascTarget Do(Tasc tasc)
+        public ITascTarget Do(Tasc tasc)
         {
             _tascs.Add(tasc);
             return this;
         }
 
-        
     }
 }

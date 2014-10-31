@@ -8,20 +8,15 @@ namespace Howatworks.Tascs.Core
 {
     public class GenericTasc : Tasc
     {
-        private Action _action;
-        public GenericTasc(Action action)
+        private readonly Func<TascTarget, ITascResult> _function;
+        public GenericTasc(Func<TascTarget, ITascResult> function)
         {
-            _action = action;
+            _function = function;
         }
 
-        public override ITascResult Execute()
+        public override ITascResult Execute(TascTarget target)
         {
-            if (_action != null)
-            {
-                _action();
-            }
-
-            return null;
+            return _function != null ? _function(target) : null;
         }
     }
 }

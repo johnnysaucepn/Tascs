@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Howatworks.Tascs.Core
+namespace Howatworks.Tascs.Core.Exec
 {
     public class ExecTasc : Tasc
     {
@@ -19,7 +16,7 @@ namespace Howatworks.Tascs.Core
             CommandParams = args;
         }
 
-        public override ITascResult Execute()
+        public override ITascResult Execute(TascTarget target)
         {
             ITascResult result = null;
 

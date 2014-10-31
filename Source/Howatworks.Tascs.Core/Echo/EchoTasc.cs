@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Howatworks.Tascs.Core
+namespace Howatworks.Tascs.Core.Echo
 {
     public class EchoTasc : Tasc
     {
@@ -15,11 +11,10 @@ namespace Howatworks.Tascs.Core
             Line = line;
         }
 
-        public override ITascResult Execute()
+        public override ITascResult Execute(TascTarget target)
         {
             Console.WriteLine(Line);
             return null;
         }
-
     }
 }
