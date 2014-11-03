@@ -1,6 +1,4 @@
-using Howatworks.Tascs.Core.Exec;
-
-namespace Howatworks.Tascs.Core
+namespace Howatworks.Tascs.Core.Exec
 {
     public static class ExecExtensions
     {

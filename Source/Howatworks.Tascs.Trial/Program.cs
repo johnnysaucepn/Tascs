@@ -1,13 +1,9 @@
 using System;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using System.IO;
 using Howatworks.Tascs.Core;
 using Howatworks.Tascs.Core.Echo;
 using Howatworks.Tascs.Core.Exec;
 using Howatworks.Tascs.MSBuild;
-using log4net.Config;
 
 namespace Howatworks.Tascs.Trial
 {
@@ -29,42 +25,46 @@ namespace Howatworks.Tascs.Trial
             };
 
             project.Target("Build")
-                .Do(() =>
+                .BuildProject(@"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", new MSBuildOptions
                 {
-                    new MSBuildTasc(@"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", new MSBuildOptions
-                    {
-                        OutputFolder = @"BuildOutput\Release"
-                    });
-                    Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do build"));
-                    return TascResult.Pass;
-                });
+                    OutputFolder = @"BuildOutput\Release"
+                })
+                .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do build"))
+                ;
+
 
             project.Target("Deploy")
                 .DependsOn("Build")
-                .Do(x =>
+                .Echo("Deploy!")
+                .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do deploy"))
+                .BuildProject(@"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj", debugBuildOptions)
+                .Tasc(() =>
                 {
-                    x.Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do deploy"));
-                    x.BuildProject(@"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj", debugBuildOptions);
+                    Console.WriteLine("Pass this!");
                     return TascResult.Pass;
-                });
+                })
+                ;
 
             project.Target("Unnecessary")
                 .DependsOn("Deploy")
-                .Echo("Unnecessary!");
+                .Echo("Unnecessary!")
+                ;
 
             project.Target("Downstream")
-                .Echo("Downstream!");
+                .Echo("Downstream!")
+                ;
 
             project.Target("Chained")
                 .DependsOn("Downstream")
-
-                .Do(x => x.Echo("Chained!"))
-                .Do(x => Console.WriteLine("Oh, and this happened."))
-                .Do(x => Console.WriteLine("And this too."));
+                .Echo("Chained!")
+                .Tasc(() => Console.WriteLine("Oh, and this happened."))
+                .Tasc(() => Console.WriteLine("And this too."))
+                ;
 
             project.Target("Unconnected")
                 .DependsOn("NonExistent")
-                .Echo("I know nothing!");
+                .Echo("I know nothing!")
+                ;
 
             project.Build("Deploy", "Chained");
 

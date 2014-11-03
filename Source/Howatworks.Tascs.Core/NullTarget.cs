@@ -28,16 +28,6 @@ namespace Howatworks.Tascs.Core
             throw new NotImplementedException(string.Format("The TascTarget \"{0}\" has not been defined yet", Name));
         }
 
-        public ITascTarget Do(Action<ITascTarget> action)
-        {
-            throw new NotImplementedException(string.Format("The TascTarget \"{0}\" has not been defined yet", Name));
-        }
-
-        public ITascTarget Do(Func<ITascTarget, ITascResult> action)
-        {
-            throw new NotImplementedException(string.Format("The TascTarget \"{0}\" has not been defined yet", Name));
-        }
-
         public ITascTarget DependsOn(string dependency)
         {
             // TODO: identify circular references

@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="MSBuildCapability.cs" />
     <Compile Include="MSBuildExtensions.cs" />
-    <Compile Include="MSBuildOption.cs" />
     <Compile Include="MSBuildOptions.cs" />
     <Compile Include="MSBuildResult.cs" />
     <Compile Include="MSBuildTasc.cs" />
