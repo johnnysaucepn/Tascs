@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Howatworks.Tascs.Core
 {
     public class GenericTasc : Tasc
     {
-        private readonly Func<TascTarget, ITascResult> _function;
-        public GenericTasc(Func<TascTarget, ITascResult> function)
+        private readonly Func<ITascResult> _action;
+        public GenericTasc(Func<ITascResult> action)
         {
-            _function = function;
+            _action = action;
         }
 
         public override ITascResult Execute(TascTarget target)
         {
-            return _function != null ? _function(target) : null;
+            return _action != null ? _action() : TascResult.Pass;
         }
     }
 }

@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arg.cs" />
+    <Compile Include="Exec\Arg.cs" />
     <Compile Include="DuplicateTargetException.cs" />
     <Compile Include="Echo\EchoTasc.cs" />
     <Compile Include="Echo\EchoExtensions.cs" />

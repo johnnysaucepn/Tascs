@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Howatworks.Tascs.Core
 {
     public static class GenericExtensions
     {
-        public static ITascTarget Do(this ITascTarget target, Action action)
+        public static ITascTarget Tasc(this ITascTarget target, Action action)
         {
-            return target.Do(new GenericTasc(x =>
+            return target.Do(new GenericTasc(() =>
             {
                 try
                 {
@@ -24,12 +20,9 @@ namespace Howatworks.Tascs.Core
             }));
         }
 
-        public static ITascTarget Do(this ITascTarget target, Func<ITascResult> func)
+        public static ITascTarget Tasc(this ITascTarget target, Func<ITascResult> action)
         {
-            return target.Do(new GenericTasc(x =>
-            {
-                return func();
-            }));
+            return target.Do(new GenericTasc(action));
         }
 
     }
