@@ -4,13 +4,13 @@ namespace Howatworks.Tascs.Core
 {
     public static class GenericExtensions
     {
-        public static ITascTarget Tasc(this ITascTarget target, Action action)
+        public static ITascTarget Tasc(this ITascTarget target, Action<TascContext> action)
         {
-            return target.Do(new GenericTasc(() =>
+            return target.Do(new GenericTasc(context =>
             {
                 try
                 {
-                    action();
+                    action(context);
                 }
                 catch (TascException)
                 {
@@ -20,7 +20,7 @@ namespace Howatworks.Tascs.Core
             }));
         }
 
-        public static ITascTarget Tasc(this ITascTarget target, Func<ITascResult> action)
+        public static ITascTarget Tasc(this ITascTarget target, Func<TascContext, ITascResult> action)
         {
             return target.Do(new GenericTasc(action));
         }

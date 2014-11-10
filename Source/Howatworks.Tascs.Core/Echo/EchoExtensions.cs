@@ -7,5 +7,10 @@ namespace Howatworks.Tascs.Core.Echo
             return target.Do(new EchoTasc(line));
         }
 
+        public static ITascResult Echo(this TascContext context, string line)
+        {
+            return new EchoTasc(line).Execute(context);
+        }
+
     }
 }

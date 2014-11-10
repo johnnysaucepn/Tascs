@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace Howatworks.Tascs.Core
 {
-    public abstract class Tasc
+    public class TascContext
     {
-
-        public abstract ITascResult Execute(TascContext context);
-
-        public virtual void Cleanup()
+        public TascContext(TascTarget tascTarget)
         {
-            
+            this.Target = tascTarget;
         }
+        public TascTarget Target { get; set; }
     }
-
 }

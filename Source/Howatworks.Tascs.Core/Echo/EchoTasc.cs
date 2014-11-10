@@ -11,10 +11,19 @@ namespace Howatworks.Tascs.Core.Echo
             Line = line;
         }
 
-        public override ITascResult Execute(TascTarget target)
+        public override ITascResult Execute(TascContext context)
         {
-            Console.WriteLine(Line);
-            return null;
+            try
+            {
+                Console.WriteLine(Line);
+                return TascResult.Pass;
+            }
+            catch (Exception)
+            {
+                return TascResult.Fail;
+            }
+            
+            
         }
     }
 }

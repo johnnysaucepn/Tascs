@@ -38,7 +38,7 @@ namespace Howatworks.Tascs.Trial
                 .Echo("Deploy!")
                 .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do deploy"))
                 .BuildProject(@"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj", debugBuildOptions)
-                .Tasc(() =>
+                .Tasc(x =>
                 {
                     Console.WriteLine("Pass this!");
                     return TascResult.Pass;
@@ -57,8 +57,8 @@ namespace Howatworks.Tascs.Trial
             project.Target("Chained")
                 .DependsOn("Downstream")
                 .Echo("Chained!")
-                .Tasc(() => Console.WriteLine("Oh, and this happened."))
-                .Tasc(() => Console.WriteLine("And this too."))
+                .Tasc(x => Console.WriteLine("Oh, and this happened."))
+                .Tasc(x => Console.WriteLine("And this too."))
                 ;
 
             project.Target("Unconnected")
@@ -66,7 +66,17 @@ namespace Howatworks.Tascs.Trial
                 .Echo("I know nothing!")
                 ;
 
+            project.Target("Deferred")
+                .Tasc(x =>
+                {
+                    x.Echo("deferred - woo!");
+
+                });
+
+
             project.Build("Deploy", "Chained");
+
+            project.Build("Deferred");
 
             Console.WriteLine("Press any key...");
             Console.ReadKey();

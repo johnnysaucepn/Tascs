@@ -16,10 +16,14 @@ namespace Howatworks.Tascs.Core.Exec
             CommandParams = args;
         }
 
-        public override ITascResult Execute(TascTarget target)
+        public override ITascResult Execute(TascContext context)
         {
-            ITascResult result = null;
+            ITascResult result = TascResult.Pass;
 
+            try
+            {
+
+            
             var formattedParams =
                 (CommandParams != null)
                     ? string.Join(" ", CommandParams)
@@ -66,10 +70,14 @@ namespace Howatworks.Tascs.Core.Exec
                     process.WaitForExit();
                 }
             }
+            }
+            catch (Exception)
+            {
+
+                result = TascResult.Fail;
+            }
 
             return result;
-
         }
-
     }
 }
