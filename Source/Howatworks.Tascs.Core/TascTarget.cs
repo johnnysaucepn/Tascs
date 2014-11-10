@@ -20,13 +20,14 @@ namespace Howatworks.Tascs.Core
 
         public ITascResult Build()
         {
+            var context = new TascContext(this);
             ITascResult result = null;
 
             foreach (var tasc in _tascs)
             {
                 try
                 {
-                    result = tasc.Execute(this);
+                    result = tasc.Execute(context);
                 }
                 finally
                 {

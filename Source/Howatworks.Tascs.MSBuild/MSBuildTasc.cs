@@ -1,4 +1,5 @@
-﻿using Howatworks.Tascs.Core;
+﻿using System;
+using Howatworks.Tascs.Core;
 using Microsoft.Build.Execution;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Logging;
@@ -19,7 +20,7 @@ namespace Howatworks.Tascs.MSBuild
             Options = options ?? new MSBuildOptions();
         }
 
-        public override ITascResult Execute(TascTarget target)
+        public override ITascResult Execute(TascContext context)
         {
             var loggers = new List<ILogger> { new ConsoleLogger() };
 
@@ -39,16 +40,17 @@ namespace Howatworks.Tascs.MSBuild
                 var buildRequest = new BuildRequestData(projectFile, globalProperty, null, targets.ToArray(), null);
 
                 //register file logger using BuildParameters
-                var buildParams = new BuildParameters { Loggers = loggers };
+                var buildParams = new BuildParameters {Loggers = loggers};
 
                 //build solution
                 var buildResult = BuildManager.DefaultBuildManager.Build(buildParams, buildRequest);
                 return new MSBuildResult(buildResult);
             }
-            finally
+            catch (Exception)
             {
+                return TascResult.Fail;
             }
+            
         }
-
     }
 }

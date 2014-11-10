@@ -79,6 +79,7 @@ namespace Howatworks.Tascs.Core
             foreach (var baseTarget in baseTargetNames)
             {
                 var search = new BreadthFirstSearchAlgorithm<string, SEdge<string>>(_dependencies);
+                subgraph.AddVertex(baseTarget);
                 search.SetRootVertex(baseTarget);
                 search.TreeEdge += x =>
                 {
