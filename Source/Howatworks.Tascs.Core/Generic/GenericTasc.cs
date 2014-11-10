@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Howatworks.Tascs.Core
+namespace Howatworks.Tascs.Core.Generic
 {
     public class GenericTasc : Tasc
     {

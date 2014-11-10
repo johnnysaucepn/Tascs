@@ -63,8 +63,8 @@
     <Compile Include="Exec\ExecExtensions.cs" />
     <Compile Include="Exec\ExecOption.cs" />
     <Compile Include="Exec\ExecTasc.cs" />
-    <Compile Include="GenericExtensions.cs" />
-    <Compile Include="GenericTasc.cs" />
+    <Compile Include="Generic\GenericExtensions.cs" />
+    <Compile Include="Generic\GenericTasc.cs" />
     <Compile Include="ITascCapability.cs" />
     <Compile Include="ITascResult.cs" />
     <Compile Include="ITascTarget.cs" />

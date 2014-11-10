@@ -3,6 +3,7 @@ using System.IO;
 using Howatworks.Tascs.Core;
 using Howatworks.Tascs.Core.Echo;
 using Howatworks.Tascs.Core.Exec;
+using Howatworks.Tascs.Core.Generic;
 using Howatworks.Tascs.MSBuild;
 
 namespace Howatworks.Tascs.Trial
