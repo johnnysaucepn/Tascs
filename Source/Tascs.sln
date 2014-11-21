@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Howatworks.Tascs.Trial", "Howatworks.Tascs.Trial\Howatworks.Tascs.Trial.csproj", "{9190C3BD-059F-4D38-A846-F4CB399C2265}"
 EndProject
@@ -19,6 +19,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{840AEB20-1DC2-41D2-BA8A-6F91C2430D00}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTests", "Tests\ProjectTests\ProjectTests.csproj", "{3977C149-3041-4F8A-8F9A-05FA155E9869}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{1594BAB1-6FF5-43F7-AF86-DA8D12062A09}"
+	ProjectSection(SolutionItems) = preProject
+		..\Scripts\build.csx = ..\Scripts\build.csx
+		..\Scripts\v2vantage.csx = ..\Scripts\v2vantage.csx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
