@@ -9,5 +9,10 @@ namespace Howatworks.Tascs.MSBuild
             return target.Do(new MSBuildTasc(projectFile, options));
         }
 
+        public static ITascResult BuildProject(this TascContext context, string projectFile, MSBuildOptions options = null)
+        {
+            return new MSBuildTasc(projectFile, options).Execute(context);
+        }
+
     }
 }

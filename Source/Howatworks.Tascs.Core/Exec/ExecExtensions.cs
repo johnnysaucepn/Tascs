@@ -17,5 +17,21 @@ namespace Howatworks.Tascs.Core.Exec
                 RunWindowed = true
             });
         }
+
+        public static ITascResult Exec(this TascContext context, string command, params string[] cmdParams)
+        {
+            return new ExecTasc(command, cmdParams)
+            {
+                RunWindowed = false
+            }.Execute(context);
+        }
+
+        public static ITascResult ExecWindowed(this TascContext context, string command, params string[] cmdParams)
+        {
+            return new ExecTasc(command, cmdParams)
+            {
+                RunWindowed = true
+            }.Execute(context);
+        }
     }
 }
