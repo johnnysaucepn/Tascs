@@ -16,22 +16,17 @@ namespace Howatworks.Tascs.Trial
             // Get the user's current directory, not the path of the script
 
             project.Root = PathUtils.Resolve(Directory.GetCurrentDirectory(), @"..\..\..\..");
-            
-            var debugBuildOptions = new MSBuildOptions
-            {
-                OutputFolder = @"BuildOutput\Debug",
-                Configuration = @"Debug",
-                Platform = @"AnyCPU",
-                BuildTargets = "Clean, Build"
-            };
+
+            var config = "Release";
+            var platform = "x86";
+            var outputFolder = @"BuildOutput\Release";
 
             project.Target("Build")
-                .BuildProject(@"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", new MSBuildOptions
+                .Tasc(x =>
                 {
-                    OutputFolder = @"BuildOutput\Release"
-                })
-                .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do build"))
-                ;
+                    x.BuildProject(@"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", outputPath: @"BuildOutput");
+                    x.Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do build"));
+                });
 
 
             project.Target("Deploy")
