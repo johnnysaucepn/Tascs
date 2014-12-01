@@ -24,7 +24,7 @@ namespace Howatworks.Tascs.Trial
             project.Target("Build")
                 .Tasc(x =>
                 {
-                    x.BuildProject(@"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", outputPath: @"BuildOutput");
+                    x.BuildProject(@"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", outputPath: outputFolder);
                     x.Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do build"));
                 });
 
@@ -33,7 +33,7 @@ namespace Howatworks.Tascs.Trial
                 .DependsOn("Build")
                 .Echo("Deploy!")
                 .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do deploy"))
-                .BuildProject(@"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj", debugBuildOptions)
+                .BuildProject(@"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj", outputPath: outputFolder, configuration: "Debug")
                 .Tasc(x =>
                 {
                     Console.WriteLine("Pass this!");

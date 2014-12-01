@@ -19,12 +19,12 @@ namespace Howatworks.Tascs.MSBuild
 
         public IDictionary<string,string> Flags { get; set; }
 
-        public MSBuildTasc(string projectFile, string target = "Build", string configuration = "Release", string platform = "x86", string outputPath = "", IDictionary<string, string> flags = null)
+        public MSBuildTasc(string projectFile, string target = null, string configuration = null, string platform = null, string outputPath = null, IDictionary<string, string> flags = null)
         {
             ProjectFile = projectFile;
-            Target = target;
-            Configuration = configuration;
-            Platform = platform;
+            Target = target ?? "Build";
+            Configuration = configuration ?? "Release";
+            Platform = platform ?? "x86";
             OutputPath = outputPath;
             Flags = flags ?? new Dictionary<string, string>();
         }
