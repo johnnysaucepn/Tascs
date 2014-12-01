@@ -12,21 +12,17 @@ var project = TascProject.Instance;
 
 project.Root = PathUtils.Resolve(Directory.GetCurrentDirectory(), @"..\Source");
             
-var debugBuildOptions = new MSBuildOptions
-{
-    OutputFolder = @"BuildOutput\Debug",
-    Configuration = @"Debug",
-    Platform = @"AnyCPU",
-    BuildTargets = "Clean, Build"
-};
+var outputFolder = @"BuildOutput\Debug";
+var configuration = @"Debug";
+var platform = @"AnyCPU";
+var buildTargets = "Clean, Build";
 
 project.Target("Build")
     .Tasc(x=>
     {
-        x.BuildProject(@"Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", new MSBuildOptions
-        {
-            OutputFolder = @"BuildOutput\Release"
-        });
+        x.BuildProject(@"Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", targets: buildTargets,
+        configuration:configuration,
+            outputFolder: outputFolder, platform: platform);
         x.Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do build"));
     });
 
