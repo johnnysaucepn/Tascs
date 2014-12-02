@@ -12,19 +12,20 @@ namespace Howatworks.Tascs.Trial
     {
         private static void Main()
         {
-            var project = TascProject.Instance;
-            // Get the user's current directory, not the path of the script
+            var project = TascProject.Instance
+                .BasePath(@"..\..\..\..")
+                .UseMSBuild(configuration: "Release", platform: "x86", outputPath: @"BuildOutput\Release");
 
-            project.Root = PathUtils.Resolve(Directory.GetCurrentDirectory(), @"..\..\..\..");
-
-            var config = "Release";
-            var platform = "x86";
-            var outputFolder = @"BuildOutput\Release";
+            project.Target("Clean")
+                .Tasc(x =>
+                {
+                    x.BuildProject(@"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", "Clean");
+                });
 
             project.Target("Build")
                 .Tasc(x =>
                 {
-                    x.BuildProject(@"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", outputPath: outputFolder);
+                    x.BuildProject(@"Source\Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", "Build");
                     x.Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do build"));
                 });
 
@@ -32,8 +33,7 @@ namespace Howatworks.Tascs.Trial
             project.Target("Deploy")
                 .DependsOn("Build")
                 .Echo("Deploy!")
-                .Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do deploy"))
-                .BuildProject(@"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj", outputPath: outputFolder, configuration: "Debug")
+                .BuildProject(@"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj")
                 .Tasc(x =>
                 {
                     Console.WriteLine("Pass this!");

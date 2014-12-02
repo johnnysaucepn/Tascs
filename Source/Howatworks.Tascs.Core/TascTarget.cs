@@ -3,6 +3,16 @@ using System.Collections.Generic;
 
 namespace Howatworks.Tascs.Core
 {
+    public class GenerateExecutionContextArgs : EventArgs
+    {
+        public TascContext Context { get; set; }
+
+        public GenerateExecutionContextArgs(TascContext context)
+        {
+            Context = context;
+        }
+    }
+
     public class TascTarget : ITascTarget
     {
         private readonly IList<Tasc> _tascs = new List<Tasc>();
@@ -12,15 +22,19 @@ namespace Howatworks.Tascs.Core
         }
 
         public string Name { get; set; }
+        public event EventHandler<GenerateExecutionContextArgs> ApplyProjectSettingsToExecutionContext = delegate { };
 
         public static ITascTarget Create(string name)
         {
             return new TascTarget { Name = name };
         }
 
-        public ITascResult Build()
+        public ITascResult Execute()
         {
             var context = new TascContext(this);
+
+            ApplyProjectSettingsToExecutionContext(this, new GenerateExecutionContextArgs(context));
+
             ITascResult result = null;
 
             foreach (var tasc in _tascs)

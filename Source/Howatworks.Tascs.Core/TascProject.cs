@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Howatworks.Tascs.Core.Exec;
 using QuickGraph;
 using QuickGraph.Algorithms;
 using QuickGraph.Algorithms.Search;
@@ -19,6 +21,9 @@ namespace Howatworks.Tascs.Core
         }
 
         public string Root { get; set; }
+
+        public readonly IDictionary<object, object> ProjectProperties = new Dictionary<object, object>();
+
         private readonly IDictionary<string, ITascTarget> _targets = new Dictionary<string, ITascTarget>();
 
         private readonly AdjacencyGraph<string, SEdge<string>> _dependencies = new AdjacencyGraph<string, SEdge<string>>();
@@ -29,9 +34,16 @@ namespace Howatworks.Tascs.Core
 
         }
 
+        public TascProject BasePath(string relativePath)
+        {
+            Root = PathUtils.Resolve(Directory.GetCurrentDirectory(), @"..\..\..\..");
+            return this;
+        }
+
         public ITascTarget Target(string name)
         {
             var target = TascTarget.Create(name);
+            target.ApplyProjectSettingsToExecutionContext += TargetOnApplyProjectSettingsToExecutionContext;
             if (_targets.ContainsKey(name))
             {
                 _targets.Remove(name);
@@ -44,7 +56,15 @@ namespace Howatworks.Tascs.Core
             return target;
         }
 
-        internal void AddDependency(ITascTarget tascTarget, string dependentTargetName)
+        private void TargetOnApplyProjectSettingsToExecutionContext(object sender, GenerateExecutionContextArgs args)
+        {
+            foreach (var key in ProjectProperties.Keys.Where(key => (!args.Context.Properties.ContainsKey(key) || args.Context.Properties[key] == null)))
+            {
+                args.Context.Properties[key] = ProjectProperties[key];
+            }
+        }
+
+        public void AddDependency(ITascTarget tascTarget, string dependentTargetName)
         {
             ITascTarget dependencyTarget;
             if (!_targets.ContainsKey(dependentTargetName))
@@ -66,7 +86,7 @@ namespace Howatworks.Tascs.Core
 
             foreach (var target in subgraph.TopologicalSort().Reverse())
             {
-                _targets[target].Build();
+                _targets[target].Execute();
             }
         }
 
