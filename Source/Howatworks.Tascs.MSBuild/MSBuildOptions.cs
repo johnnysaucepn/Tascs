@@ -1,5 +1,13 @@
 ﻿namespace Howatworks.Tascs.MSBuild
 {
+    public enum MSBuildOption
+    {
+        OutputFolder,
+        Configuration,
+        Platform,
+        Target
+    }
+
     public class MSBuildOptions
     {
         public string OutputFolder { get; set; }

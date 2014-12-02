@@ -13,5 +13,7 @@ namespace Howatworks.Tascs.Core
             this.Target = tascTarget;
         }
         public TascTarget Target { get; set; }
+
+        public readonly IDictionary<object, object> Properties = new Dictionary<object, object>();
     }
 }

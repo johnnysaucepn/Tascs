@@ -13,12 +13,15 @@ namespace Howatworks.Tascs.Core
             get; set;
         }
 
+        public event EventHandler<GenerateExecutionContextArgs> ApplyProjectSettingsToExecutionContext;
+
         public NullTarget(string name)
         {
             Name = name;
+            ApplyProjectSettingsToExecutionContext += (sender, args) => { throw new NotImplementedException(string.Format("The TascTarget \"{0}\" has not been defined yet", Name)); };
         }
 
-        public ITascResult Build()
+        public ITascResult Execute()
         {
             throw new NotImplementedException(string.Format("The TascTarget \"{0}\" has not been defined yet", Name));
         }
