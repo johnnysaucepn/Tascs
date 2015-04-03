@@ -33,9 +33,10 @@ namespace Howatworks.Tascs.Trial
             project.Target("Deploy")
                 .DependsOn("Build")
                 .Echo("Deploy!")
-                .BuildProject(@"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj")
+                
                 .Tasc(x =>
                 {
+                    x.BuildProject(@"Source\Howatworks.Tascs.MSBuild\Howatworks.Tascs.MSBuild.csproj");
                     Console.WriteLine("Pass this!");
                     return TascResult.Pass;
                 })
