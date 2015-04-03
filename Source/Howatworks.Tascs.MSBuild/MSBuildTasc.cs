@@ -31,6 +31,11 @@ namespace Howatworks.Tascs.MSBuild
 
         public override ITascResult Execute(TascContext context)
         {
+            Target = Target ?? context.Properties[MSBuildOption.OutputFolder].ToString();
+            Configuration = Configuration ?? context.Properties[MSBuildOption.Configuration].ToString();
+            Platform = Platform ?? context.Properties[MSBuildOption.Platform].ToString();
+            OutputPath = OutputPath ?? context.Properties[MSBuildOption.OutputFolder].ToString();
+
             var loggers = new List<ILogger> { new ConsoleLogger() };
 
             var projectFile = PathUtils.Resolve(TascProject.Instance.Root, ProjectFile);

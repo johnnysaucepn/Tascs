@@ -19,14 +19,14 @@ namespace Howatworks.Tascs.MSBuild
             return project;
         }
 
-        public static ITascTarget BuildProject(this ITascTarget tascTarget, string projectFile=null, string target=null, string configuration=null, string platform=null, string outputPath=null, IDictionary<string, string> flags=null)
+        public static ITascResult BuildProject(this TascContext context, string projectFile, string target = null, string configuration = null, string platform = null, string outputPath = null, IDictionary<string, string> flags = null)
         {
-            return tascTarget.Do(new MSBuildTasc(projectFile, target, configuration,platform,outputPath,flags));
-        }
+            if (target != null) context.Properties[MSBuildOption.Target] = target;
+            if (configuration != null) context.Properties[MSBuildOption.Configuration] = configuration;
+            if (platform != null) context.Properties[MSBuildOption.Platform] = platform;
+            if (outputPath != null) context.Properties[MSBuildOption.OutputFolder] = outputPath;
 
-        public static ITascResult BuildProject(this TascContext context, string projectFile = null, string target = null, string configuration = null, string platform = null, string outputPath = null, IDictionary<string, string> flags = null)
-        {
-            return new MSBuildTasc(projectFile, target, configuration, platform, outputPath, flags).Execute(context);
+            return new MSBuildTasc(projectFile).Execute(context);
         }
 
     }
