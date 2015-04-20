@@ -20,12 +20,15 @@ var buildTargets = "Clean, Build";
 project.Target("Build")
     .Tasc(x=>
     {
-        x.BuildProject(@"Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj", targets: buildTargets,
-        configuration:configuration,
-            outputFolder: outputFolder, platform: platform);
+        x.BuildProject(
+            @"Howatworks.Tascs.Core\Howatworks.Tascs.Core.csproj",
+            targets: buildTargets,
+            configuration:configuration,
+            outputFolder: outputFolder,
+            platform: platform
+            );
         x.Exec(@"cmd.exe", Arg.Literal(@"/c"), Arg.Literal(@"echo"), Arg.Quoted(@"do build"));
     });
-
 
 project.Target("Downstream")
     .Echo("Downstream!")
