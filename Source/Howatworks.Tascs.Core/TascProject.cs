@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using Howatworks.Tascs.Core.Exec;
@@ -22,7 +23,7 @@ namespace Howatworks.Tascs.Core
 
         public string Root { get; set; }
 
-        public readonly IDictionary<object, object> ProjectProperties = new Dictionary<object, object>();
+        public readonly dynamic ProjectProperties = new ExpandoObject();
 
         private readonly IDictionary<string, ITascTarget> _targets = new Dictionary<string, ITascTarget>();
 
@@ -58,7 +59,9 @@ namespace Howatworks.Tascs.Core
 
         private void TargetOnApplyProjectSettingsToExecutionContext(object sender, GenerateExecutionContextArgs args)
         {
-            foreach (var key in ProjectProperties.Keys.Where(key => (!args.Context.Properties.ContainsKey(key) || args.Context.Properties[key] == null)))
+            var projectPropertyDictionary = (IDictionary<string, object>) ProjectProperties;
+            var contextPropertyDictionary = (IDictionary<string, object>) args.Context.Properties;
+            foreach (var key in projectPropertyDictionary.Keys.Where(key => (!contextPropertyDictionary.ContainsKey(key) || contextPropertyDictionary[key] == null)))
             {
                 args.Context.Properties[key] = ProjectProperties[key];
             }

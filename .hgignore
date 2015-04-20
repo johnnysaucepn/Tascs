@@ -4,3 +4,4 @@ Source/**/obj/**
 **.suo
 **.user
 BuildOutput/**
+**.sln.ide
